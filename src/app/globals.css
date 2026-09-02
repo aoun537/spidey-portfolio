@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens — transcribed from the reference build.
+   Reference theme: Outfit + JetBrains Mono, #fafafa page, #a31515 accent.
+------------------------------------------------------------------ */
+@theme {
+  --font-sans: var(--font-outfit), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, monospace;
+
+  /* Spider-verse accents */
+  --color-spidey: #a31515;
+  --color-spidey-dark: #7a0f0f;
+  --color-spidey-ink: #111111;
+  --color-spidey-blush: #fca5a5;
+  --color-spidey-flare: #ef4444;
+
+  --color-page: #fafafa;
+}
+
+/* ------------------------------------------------------------------
+   Base
+------------------------------------------------------------------ */
+:root {
+  color: #000;
+  background-color: var(--color-page);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-page);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* The reference relies on the browser default border-box reset shipped with
+   Tailwind Preflight; nothing further is overridden. */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4d4d8;
+}
+
+/* Keyboard focus only — pointer interactions keep the reference's clean look. */
+:focus-visible {
+  outline: 2px solid var(--color-spidey);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------
+   Utilities
+------------------------------------------------------------------ */
+
+/* Hard, un-blurred comic offset shadows — the site's signature heading look. */
+@utility text-shadow-hero {
+  text-shadow:
+    4px 4px 0px var(--color-spidey-flare),
+    7px 7px 0px var(--color-spidey);
+}
+
+@utility text-shadow-comic {
+  text-shadow: 2px 2px 0px var(--color-spidey-blush);
+}
+
+/* Applied to the hero's top layer; the gradient itself is driven by
+   motion values, this only pins the non-animated mask properties. */
+@utility mask-layer {
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion
+   JS gates the Framer Motion work; this covers the CSS-driven pieces.
+------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
